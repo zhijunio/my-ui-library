@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MyUI
 
-## Getting Started
+MyUI is a copy-and-paste React component library. It provides accessible, typed components built with Radix UI, Tailwind CSS, and the shadcn registry.
 
-First, run the development server:
+## Component categories
+
+The directory groups its 63 components under these single-word labels:
+
+- **Actions**: buttons, button groups, toggles, and toggle groups.
+- **Forms**: inputs, selection controls, calendars, fields, and questionnaires.
+- **Navigation**: breadcrumbs, carousels, menus, pagination, sidebars, and tabs.
+- **Overlays**: dialogs, drawers, menus, popovers, sheets, and tooltips.
+- **Feedback**: alerts, empty states, progress indicators, skeletons, spinners, toasts, and traces.
+- **Layout**: aspect ratios, direction, resizable panels, scroll areas, and separators.
+- **Data**: avatars, badges, cards, charts, items, keyboard keys, markers, and tables.
+- **Content**: attachments, chat bubbles, code blocks, messages, and message scrollers.
+- **Disclosure**: accordions and collapsible panels.
+- **Commands**: command menus and palettes.
+
+## Install a component
+
+Use the shadcn CLI to add a component to your project:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dlx shadcn@latest add zhijunio/my-ui-library/button
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Replace `button` with a component name, such as `dialog` or `input`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Run the site locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Install dependencies and start the development server:
 
-## Learn More
+```bash
+pnpm install
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Work with the registry
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The root `registry.json` contains the component definitions. Regenerate it after changing UI components, then validate it or build the static registry:
 
-## Deploy on Vercel
+```bash
+pnpm registry:generate
+pnpm registry:validate
+pnpm registry:build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To generate registry entries that use GitHub item URLs, pass the repository name:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm registry:generate -- --github zhijunio/my-ui-library
+pnpm registry:build
+```
+
+For local installation from the generated static registry, start the site and run this command from the consuming project:
+
+```bash
+pnpm dlx shadcn@latest add http://localhost:3000/r/button.json
+```
+
+## Development commands
+
+- `pnpm lint` checks the project with Biome.
+- `pnpm format` formats supported source files with Biome.
+- `pnpm registry:generate` updates `registry.json` from `src/components/ui`.
+- `pnpm registry:validate` checks the registry definitions.
+- `pnpm registry:build` validates the registry and builds static registry files in `public/r`.
